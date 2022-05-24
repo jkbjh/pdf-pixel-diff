@@ -27,6 +27,7 @@ test:
       - .nox
   script:
     - nox --verbose
+  coverage: '/TOTAL.*\s+(\d+%)$/'
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
     paths:
@@ -36,9 +37,11 @@ test:
       - pytest-report-py38.xml
     when: always
     expire_in: 1 week
-    coverage: '/TOTAL.*\s+(\d+%)$/'
     reports:
-      cobertura: coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+        #cobertura: coverage.xml
       junit: pytest-report-py38.xml
 
 # pages:
