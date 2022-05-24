@@ -40,12 +40,12 @@ test:
     expire_in: 1 week
     reports:
       # coverage gitlab >= 14.10
-      # coverage_report:
-      #   coverage_format: cobertura
-      #   path: coverage.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
       # coverage gitlab <= 14.09
-      cobertura: coverage.xml
-      junit: pytest-report.xml
+      # cobertura: coverage.xml
+      # junit: pytest-report.xml
 
 # pages:
 #   stage: deploy
