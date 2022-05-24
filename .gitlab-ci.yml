@@ -13,8 +13,8 @@ before_script:
   - pip install virtualenv
   - virtualenv venv
   - source venv/bin/activate
-  # - pip install nox
-  - pip install -r requirements.built
+  - pip install nox
+  - pip install -r requirements.built --no-deps  # -- dependencies already listed.
 
 
 test:
