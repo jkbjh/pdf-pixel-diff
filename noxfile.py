@@ -37,6 +37,20 @@ def dopylint(session):
     )
 
 
+def dopytest(session):
+    common_install(session)
+    session.run(
+        "py.test",
+        "--junitxml=pytest-report.xml",
+        "--cov=%s" % (PACKAGE_NAME,),
+        "--cov-append",
+        "--cov-report=html",
+        "--cov-report=xml",
+        "--html=pytest-report.html",
+        "tests",
+    )
+
+
 @nox.session(python="python")
 def pylint(session):
     common_install(session)
@@ -51,17 +65,7 @@ def pyflake(session):
 
 @nox.session(python="python")
 def pytest(session):
-    common_install(session)
-    session.run(
-        "py.test",
-        "--junitxml=pytest-report.xml",
-        "--cov=%s" % (PACKAGE_NAME,),
-        "--cov-append",
-        "--cov-report=html",
-        "--cov-report=xml",
-        "--html=pytest-report.html",
-        "tests",
-    )
+    dopytest(session)
 
 
 @nox.session(python="python")

@@ -9,24 +9,48 @@ cache:
     - venv/
 
 before_script:
+  # if you have private repositories in your project use a ci-token:
+  # - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.example.com/group/repo.git".insteadOf git@gitlab.example.com:group/repo.git
   - python -V  # Print out python version for debugging
-  - pip install virtualenv
-  - virtualenv venv
-  - source venv/bin/activate
-  - pip install nox
-  - pip install -r requirements.built --no-deps  # -- dependencies already listed.
+  - pip install nox virtualenv
+
+
+stages:
+  - Build
+  - Static Analysis
+  - Test
+  - Deploy
+
+
+install:
+  stage: Build
+  script:
+    - nox --install-only -r --verbose
+
+
+package_dependencies:
+  stage: Deploy
+  script:
+    - nox -r --verbose -s package_install_only
+
+
+pyflake:
+  stage: Static Analysis
+  allow_failure: false
+  script:
+    - nox -r --no-install --verbose -s pyflake
 
 
 test:
-  stage: test
-  allow_failure: true
+  stage: Test
+  allow_failure: false
   cache:
-    key: nox-tf_sb_compat_dosac
+    key: nox-python-example
     paths:
       - venv
       - .nox
   script:
-    - nox --verbose
+    - nox --verbose --no-install -r -s pytest
   coverage: '/TOTAL.*\s+(\d+%)$/'
   artifacts:
     name: "$CI_JOB_NAME-$CI_COMMIT_REF_NAME"
