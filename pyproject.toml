@@ -39,3 +39,8 @@ include = '''
     | .*tests/.*\.pyi?$
 '''
 
+[tool.ruff]
+# Enable pycodestyle (`E`) and Pyflakes (`F`) codes by default.
+select = ["E", "F"]
+# Allow lines to be as long as 120 characters.
+line-length = 120
