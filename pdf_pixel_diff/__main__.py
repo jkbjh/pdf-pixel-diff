@@ -4,7 +4,6 @@ import os
 import subprocess
 import tempfile
 
-import img2unicode
 import numpy as np
 from PIL import Image
 
@@ -21,6 +20,8 @@ def scale_image_to_fit(image_path, output_path):
 
 
 def to_ascii_art(in_png, out_txt):
+    import img2unicode
+
     # Use Unicode Block Elements
     cols, rows = os.get_terminal_size()
     scale_image_to_fit(in_png, "diff.scaled.png")
@@ -75,11 +76,9 @@ def main():
             exit(0)  # Signal to Git that files are the same
         else:
             diff_image = "diff.png"
-            create_pixel_diff_image(tmp_png1.name, tmp_png2.name, diff_image)
-
             # apply_image_magick_operations(diff_image)
-
             if args.asciiart:
+                create_pixel_diff_image(tmp_png1.name, tmp_png2.name, diff_image)
                 to_ascii_art(diff_image, "diff.txt")
                 with open("diff.txt", "rt") as fobj:
                     print()
