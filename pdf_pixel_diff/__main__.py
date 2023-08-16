@@ -15,6 +15,7 @@ def convert_pdf_to_png(pdf_file, png_file):
 
 def create_pixel_diff_image(image1, image2, diff_image):
     subprocess.run(["compare", "-metric", "AE", "-fuzz", "5%", image1, image2, diff_image])
+    subprocess.run(["convert", diff_image, "-blur", "0x3", diff_image])  # Apply a blur filter
 
 
 def main():
