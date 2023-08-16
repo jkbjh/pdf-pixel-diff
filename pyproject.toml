@@ -21,7 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 urls = {Homepage = "TODO"}
-dependencies = ["numpy", "Pillow"]
+dependencies = ["numpy", "Pillow", "img2unicode"]
 
 [tool.setuptools]
 include-package-data = false
@@ -44,3 +44,6 @@ include = '''
 select = ["E", "F"]
 # Allow lines to be as long as 120 characters.
 line-length = 120
+
+[project.scripts]
+pdf-pixel-diff = "pdf_pixel_diff.__main__:main"
