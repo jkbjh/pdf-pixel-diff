@@ -2,6 +2,7 @@
 import argparse
 import os
 import subprocess
+import sys
 import tempfile
 
 import numpy as np
@@ -56,7 +57,10 @@ def main():
     parser.add_argument("pdf1", help="Path to the first PDF file")
     parser.add_argument("pdf2", help="Path to the second PDF file")
     parser.add_argument("--asciiart", action="store_true", help="Convert diff image to ASCII art and print to console")
-    args = parser.parse_args()
+    argv = sys.argv[1:]
+    if "--" in argv:
+        argv = argv[: argv.index("--")]
+    args = parser.parse_args(argv)
 
     if not os.path.exists(args.pdf1):
         raise FileNotFoundError(f"Input PDF file '{args.pdf1}' not found.")
