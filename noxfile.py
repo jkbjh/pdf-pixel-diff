@@ -1,6 +1,6 @@
 import nox
 
-PACKAGE_NAME = "python_example"
+PACKAGE_NAME = "pdf_pixel_diff"
 
 
 def common_install(session):
@@ -31,9 +31,9 @@ def dopylint(session):
         "text",
         "--output=pylint.log",
         PACKAGE_NAME,
-        "--load-plugins=pylint_gitlab",
-        "--output-format=pylint_gitlab.GitlabPagesHtmlReporter",
-        "--output=pylint.html",
+        # "--load-plugins=pylint_gitlab",
+        # "--output-format=pylint_gitlab.GitlabPagesHtmlReporter",
+        # "--output=pylint.html",
     )
 
 

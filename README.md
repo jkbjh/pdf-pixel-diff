@@ -16,4 +16,4 @@ After installing `nox`, run the nox tests by
 python -m nox
 ```
 
-To adapt to your project replace `python_example` by your project name everywhere.
+To adapt to your project replace `pdf_pixel_diff` by your project name everywhere.

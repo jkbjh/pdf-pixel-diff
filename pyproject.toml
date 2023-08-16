@@ -3,7 +3,7 @@ requires = ["setuptools>=61.2"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "python_example"
+name = "pdf_pixel_diff"
 version = "0.0.0"
 authors = [{name = "The Author", email = "author@email.com"}]
 license = {text = "MIT"}
@@ -21,7 +21,7 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 urls = {Homepage = "TODO"}
-dependencies = []
+dependencies = ["numpy", "Pillow"]
 
 [tool.setuptools]
 include-package-data = false
@@ -34,7 +34,7 @@ namespaces = false
 line-length = 120
 target-version = ['py38']
 include = '''
-    .*python_example/.*\.pyi?$
+    .*pdf_pixel_diff/.*\.pyi?$
     | .*scripts/.*\.pyi?$
     | .*tests/.*\.pyi?$
 '''
