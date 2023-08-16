@@ -12,6 +12,10 @@ def convert_pdf_to_png(pdf_file, png_file):
     subprocess.check_call(["convert", "-density", "75", "-define", "png:color-type=6", pdf_file, png_file])
 
 
+def create_diff_image(image1, image2, output):
+    subprocess.run(["compare", "-metric", "AE", "-fuzz", "5%", image1, image2, output])
+
+
 def compare_images(image1, image2):
     img1 = np.array(Image.open(image1))
     img2 = np.array(Image.open(image2))
@@ -24,9 +28,7 @@ def compare_images(image1, image2):
     if pixel_diff == 0:
         return True
     else:
-        diff = np.abs(img1 - img2)
-        diff_img = Image.fromarray(diff.astype(np.uint8))
-        diff_img.save("diff.png")
+        create_diff_image(image1, image2, "diff.png")
         return False
 
 
