@@ -2,7 +2,6 @@
 import argparse
 import os
 import subprocess
-import sys
 import tempfile
 
 import numpy as np
@@ -57,10 +56,8 @@ def main():
     parser.add_argument("pdf1", help="Path to the first PDF file")
     parser.add_argument("pdf2", help="Path to the second PDF file")
     parser.add_argument("--asciiart", action="store_true", help="Convert diff image to ASCII art and print to console")
-    argv = sys.argv[1:]
-    if "--" in argv:
-        argv = argv[: argv.index("--")]
-    args = parser.parse_args(argv)
+    parser.add_argument("--exit0", action="store_true", help="Output exit code 0 even when files are different")
+    args = parser.parse_args()
 
     if not os.path.exists(args.pdf1):
         raise FileNotFoundError(f"Input PDF file '{args.pdf1}' not found.")
@@ -88,9 +85,10 @@ def main():
                     print()
                     print(fobj.read())
             else:
-                print("Files are different, use --asciiart flag to view ASCII art representation.")
+                print(f"Changed: {args.pdf1}")
 
-            exit(1)  # Signal to Git that files are different
+            if not args.exit0:
+                exit(1)  # Signal to Git that files are different
 
 
 if __name__ == "__main__":
