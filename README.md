@@ -21,3 +21,18 @@ and in your `.gitattributes` put:
 ```
 *.pdf	diff=pixelpdf
 ```
+
+# Example
+
+```
+python -m pdf_pixel_diff --asciiart --storediff diff.png tests/version1.pdf  tests/version2.pdf
+```
+
+creates the following difference image `diff.png`:
+
+![image](dreadme/diff.png)
+
+which converted to unicode and displayed on the console looks like this:
+
+![image](dreadme/diff-image-ascii.png)
+
