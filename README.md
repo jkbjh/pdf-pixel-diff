@@ -1,19 +1,23 @@
-# python-example
+# pdf-pixel-diff
 
-Enable the pre-commit hooks:
-```
-pre-commit install
-```
+Matplotlib creates visually identical, but binary different, PDF
+plots. This script compare two PDF files by converting them to an
+image and performing a pixel-wise diff. As a bonus, a diff image is
+created and can be shown on the console by the unicode-equivalent of
+ascii art :-D
 
-
-Use `pip-compile` from `pip-tools` to generate a current requirements.built file from your setup:
 ```
-pip-compile -v requirements.in requirements.dev --output-file requirements.built
-```
-
-After installing `nox`, run the nox tests by
-```
-python -m nox
+pipx install git+https://github.com/jkbjh/pdf-pixel-diff.git
 ```
 
-To adapt to your project replace `pdf_pixel_diff` by your project name everywhere.
+Add this to your git config (e.g., `.git/config`):
+```
+[diff "pixelpdf"]
+	binary = true
+	command = sh -c 'pdf-pixel-diff --exit0 --asciiart $0 $1'
+```
+
+and in your `.gitattributes` put:
+```
+*.pdf	diff=pixelpdf
+```
