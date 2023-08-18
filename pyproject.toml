@@ -22,6 +22,10 @@ classifiers = [
 ]
 urls = {Homepage = "TODO"}
 dependencies = ["numpy", "Pillow", "img2unicode"]
+# worked with these:
+# img2unicode>=0.1a11
+# Pillow>=10.0.0
+# numpy>=1.25.2
 
 [tool.setuptools]
 include-package-data = false
