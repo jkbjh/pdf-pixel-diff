@@ -86,6 +86,7 @@ def main():
             else:
                 diff_image = tmp_diff.name
             # apply_image_magick_operations(diff_image)
+            print(f"Changed: {args.pdf1}")
             if args.asciiart:
                 create_pixel_diff_image(tmp_png1.name, tmp_png2.name, diff_image)
                 with tempfile.NamedTemporaryFile(suffix=".txt") as tmp_diff_txt:
@@ -93,8 +94,6 @@ def main():
                     with open(tmp_diff_txt.name, "rt") as fobj:
                         print()
                         print(fobj.read())
-            else:
-                print(f"Changed: {args.pdf1}")
 
             if not args.exit0:
                 exit(1)  # Signal to Git that files are different
