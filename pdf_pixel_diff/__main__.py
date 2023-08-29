@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import os
+import shutil
 import subprocess
 import tempfile
 
@@ -8,8 +9,12 @@ import numpy as np
 from PIL import Image
 
 
+def get_terminal_size():
+    return shutil.get_terminal_size(fallback=(120, 50))
+
+
 def scale_image_to_fit(image_path, output_path):
-    cols, rows = os.get_terminal_size()
+    cols, rows = get_terminal_size()
     pixel_multiplier = 8
     width, height = cols * pixel_multiplier, rows * pixel_multiplier
     img = Image.open(image_path)
@@ -20,10 +25,10 @@ def scale_image_to_fit(image_path, output_path):
 
 
 def to_ascii_art(in_png, out_txt):
-    import img2unicode
+    import img2unicode  # local import, because import is veery slow.
 
     # Use Unicode Block Elements
-    cols, rows = os.get_terminal_size()
+    cols, rows = get_terminal_size()
     scale_image_to_fit(in_png, "diff.scaled.png")
     optimizer = img2unicode.FastQuadDualOptimizer()
     renderer = img2unicode.Renderer(default_optimizer=optimizer, max_h=rows, max_w=cols)
