@@ -95,7 +95,10 @@ def main():
         img1 = Image.open(tmp_png1.name)
         img2 = Image.open(tmp_png2.name)
 
+        # ensure that the saved images are the same size
         img1, img2 = pad_images_to_same_size(img1, img2)
+        img1.save(tmp_png1.name)
+        img2.save(tmp_png2.name)
 
         pixel_diff = np.sum(np.array(img1) != np.array(img2))
 
