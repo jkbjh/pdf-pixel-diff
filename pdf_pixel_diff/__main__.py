@@ -9,6 +9,22 @@ import numpy as np
 from PIL import Image
 
 
+def pad_images_to_same_size(image1, image2):
+    width1, height1 = image1.size
+    width2, height2 = image2.size
+    max_width = max(width1, width2)
+    max_height = max(height1, height2)
+    padded_image1 = Image.new("RGB", (max_width, max_height), (255, 255, 255))  # White background
+    padded_image2 = Image.new("RGB", (max_width, max_height), (255, 255, 255))  # White background
+    left_padding1 = (max_width - width1) // 2
+    top_padding1 = (max_height - height1) // 2
+    left_padding2 = (max_width - width2) // 2
+    top_padding2 = (max_height - height2) // 2
+    padded_image1.paste(image1, (left_padding1, top_padding1))
+    padded_image2.paste(image2, (left_padding2, top_padding2))
+    return padded_image1, padded_image2
+
+
 def get_terminal_size():
     return shutil.get_terminal_size(fallback=(120, 50))
 
@@ -76,7 +92,12 @@ def main():
         convert_pdf_to_png(args.pdf1, tmp_png1.name)
         convert_pdf_to_png(args.pdf2, tmp_png2.name)
 
-        pixel_diff = np.sum(np.array(Image.open(tmp_png1.name)) != np.array(Image.open(tmp_png2.name)))
+        img1 = Image.open(tmp_png1.name)
+        img2 = Image.open(tmp_png2.name)
+
+        img1, img2 = pad_images_to_same_size(img1, img2)
+
+        pixel_diff = np.sum(np.array(img1) != np.array(img2))
 
         if pixel_diff == 0:
             exit(0)  # Signal to Git that files are the same
