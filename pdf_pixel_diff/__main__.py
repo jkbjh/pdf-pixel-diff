@@ -5,6 +5,7 @@ import shutil
 import subprocess
 import tempfile
 
+import img2unicode  # slow import.
 import numpy as np
 from PIL import Image
 
@@ -41,8 +42,6 @@ def scale_image_to_fit(image_path, output_path):
 
 
 def to_ascii_art(in_png, out_txt):
-    import img2unicode  # local import, because import is veery slow.
-
     # Use Unicode Block Elements
     cols, rows = get_terminal_size()
     scale_image_to_fit(in_png, "diff.scaled.png")
