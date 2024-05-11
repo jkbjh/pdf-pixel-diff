@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pdf_pixel_diff"
-version = "0.0.2.1"
+version = "0.0.2.2"
 authors = [{name = "The Author", email = "author@email.com"}]
 license = {text = "MIT"}
 description = "An example for a python package."
@@ -21,7 +21,11 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
 ]
 urls = {Homepage = "TODO"}
-dependencies = ["numpy", "Pillow", "img2unicode", "git+https://github.com/jkbjh/ubume.git"]
+dependencies = [
+   "numpy",
+   "Pillow",
+   "img2unicode",
+   "ubume@git+https://github.com/jkbjh/ubume.git"]
 # worked with these:
 # img2unicode>=0.1a11
 # Pillow>=10.0.0
