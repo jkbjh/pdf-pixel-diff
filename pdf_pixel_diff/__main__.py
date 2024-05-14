@@ -12,6 +12,35 @@ from . import pad_images_to_same_size
 from . import to_ascii_art
 
 
+class InstallationInstructions(argparse.Action):
+    def __call__(self, parser, namespace, values, option_string=None):
+        git_root = "GIT_ROOT"
+        tmpdir = tempfile.gettempdir()
+        command = (
+            f"sh -c 'pdf-pixel-diff-ubume {tmpdir}/pdfpixeldiff.$USER.ubume.socket pdf_pixel_diff -- "
+            f"--exit0 --asciiart $0 $1'"
+        )
+        print(
+            f"""
+        add to your {git_root}/.gitattributes:
+        ```
+        echo '*.pdf\tdiff=pixelpdf' >> {git_root}/.gitattributes
+        ```
+
+        then, create the diff for pixeldiff:
+
+        ```
+        [diff "pixelpdf"]
+        binary = true
+        command = {command}
+        ```
+
+        to your git config, e.g. {git_root}/config
+        """
+        )
+        parser.exit()
+
+
 def main():
     parser = argparse.ArgumentParser(description="Custom PDF diff tool for Git")
     parser.add_argument("pdf1", help="Path to the first PDF file")
@@ -19,6 +48,7 @@ def main():
     parser.add_argument("--asciiart", action="store_true", help="Convert diff image to ASCII art and print to console")
     parser.add_argument("--exit0", action="store_true", help="Output exit code 0 even when files are different")
     parser.add_argument("--storediff", type=str, help="Store the diff image to a given path")
+    parser.add_argument("--git-installation-instructions", action=InstallationInstructions, nargs=0)
     args = parser.parse_args()
 
     if not os.path.exists(args.pdf1):
